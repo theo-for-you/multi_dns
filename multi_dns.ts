@@ -5,7 +5,7 @@ import net from "net"
 
 function getServers() {
 
-    let fd = fs.readFileSync("server", { flag: "a+", encoding: "utf8" })
+    let fd = fs.readFileSync("servers", { flag: "a+", encoding: "utf8" })
     return fd.split(/\r?\n/) // Every new line
 }
 
@@ -24,32 +24,33 @@ const server = dns2.createServer({
         let [question] = request.questions;
         let { name } = question;
 
-        let servers = getServers();
 
-        console.log("got req")
+        for (let server of getServers()) {
 
-        for (let server of servers) {
             dns.setServers([server])
-            dns.lookup(name, (err, address) => {
-                console.log("lookuped")
+            // Only A record
+            dns.resolve4(name, (err, addresses) => {
 
+                addresses.forEach((address) => {
+                    let socket = checkIP(address)
 
-                let socket = checkIP(address)
-                socket.on("ready", () => { // Connects successfully
+                    // If connects successfully
+                    socket.on("ready", () => {
 
-                    console.log("check")
-                    response.answers.push({
-                        name,
-                        type: Packet.TYPE.A, // Only A record
-                        class: Packet.CLASS.IN,
-                        ttl: 300,
-                        address: address
-                    });
-                    send(response);
+                        response.answers.push({
+                            name,
+                            type: Packet.TYPE.A,
+                            class: Packet.CLASS.IN,
+                            ttl: 300,
+                            address: address
+                        });
+                        send(response);
 
-                    socket.destroy()
+                        socket.destroy()
 
+                    })
                 })
+
             })
         }
 
