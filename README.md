@@ -1,6 +1,8 @@
 # Multi DNS
 A dns server that can check multiple other servers and choose an available IP address. 
 
+Usage: some nameservers can give unavailable IPs
+
 It can only resolve A records. 
 It check addresses for being available on TLS port 
 
