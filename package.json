@@ -2,9 +2,9 @@
   "name": "Multi DNS",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "multi_dns.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx ts-node multi_dns.ts"
   },
   "keywords": [],
   "author": "",
