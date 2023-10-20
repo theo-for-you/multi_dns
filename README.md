@@ -1,18 +1,18 @@
 # Multi DNS
-A dns server that can check multiple other servers and choose an available IP address. 
+A dns resolve program that can check multiple other servers and choose an available IP address. 
 
 Use case: some nameservers can give unavailable IPs
 
-It can only resolve A records. 
-It check addresses for being available on TLS port 
+It can only resolve A records
 
 ## How to use
 
-1. Put DNS servers that you found into "servers" file
-2. `npm i` and run the script `npm start`
-3. Configure your program to use this server, default port is 5332
+1. Put DNS servers that you found into `.conf` file in your work directory 
+2. Run `pip install .` to install as a python package
+3. Use it in your grogram by importing `resolve_A`
 
 
 ## To do
  - Add DNS over HTTPS
  - Add support of records other than A
+ - Add network server support
